@@ -1,3 +1,5 @@
 gifs/
 webm/
 node_modules
+
+.env
