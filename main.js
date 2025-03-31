@@ -58,19 +58,20 @@ fs.readdir(folderPath, (err, files) => {
 
     ffmpeg(inputPath)
       .outputOptions([
-        "-c:v libvpx-vp9", // Use VP9 codec for better compatibility
-        "-crf 35", // Constant quality mode (lower values yield higher quality)
-        "-b:v 0", // No bitrate limit
-        "-c:a libopus", // Use Opus audio codec
-        "-vf scale=512:512:force_original_aspect_ratio=decrease", // Scale to fit within 512x512
+        "-c:v libvpx-vp9", // Use VP9 codec
+        "-crf 41", // Increased CRF for smaller file size (30-50, higher = smaller file)
+        "-b:v 150k", // Set maximum bitrate
+        "-maxrate 150k", // Maximum bitrate constraint
+        "-bufsize 150k", // Buffering constraint
+        "-vf scale=512:512:force_original_aspect_ratio=decrease,fps=30", // Scale and limit framerate
+        "-an", // Remove audio
+        "-t 3" // Limit duration to 3 seconds
       ])
       .on("start", (commandLine) => {
         console.log(`Spawned ffmpeg with command: ${commandLine}`);
       })
       .on("progress", (progress) => {
         // console.log(progress);
-        // const percent = Math.round((progress.frames / progress.totalFrames) * 100);
-        // console.log(`Processing: ${percent}% done`);
       })
       .on("end", () => {
         console.log(`Successfully converted ${file} to ${outputFileName}`);
