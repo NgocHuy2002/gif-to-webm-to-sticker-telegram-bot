@@ -113,9 +113,9 @@ bot.command("createstickers", async (ctx) => {
         stickerSetName,
         {
           webm_sticker: { source: firstFilePath },
-          emoji_list: ['⭐️']
+          emoji_list: [':scissors:']
         },
-        'video'  // Specify sticker type as video
+        // 'video'  // Specify sticker type as video
       );
 
       // Add remaining stickers
@@ -127,7 +127,7 @@ bot.command("createstickers", async (ctx) => {
           stickerSetName,
           {
             webm_sticker: { source: filePath },
-            emoji_list: ['⭐️']
+            emoji_list: [':scissors:']
           }
         );
 
